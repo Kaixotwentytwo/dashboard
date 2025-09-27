@@ -29,6 +29,7 @@ function pickOptions(setOfSelects, arrayOfColumns, setOfExceptions) {
                 while (select.children.length > 1) {
                     select.removeChild(select.lastChild);}
 
+                let excludedList = [];
                 let optionsList = new Set(
                     Array.from(arrayOfColumns).filter(item => !setOfExceptions.has(item)));
 
@@ -61,6 +62,20 @@ function pickOptions(setOfSelects, arrayOfColumns, setOfExceptions) {
         errors.forEach(function(error){
             console.error("Ошибка валидации: "+error);
         });
+    }
+}
+
+
+function checkValue(selectElement) {
+    if (selectElement != null || selectElement != false || selectElement != undefined) {
+        try {
+            if (selectElement.value != "-1")
+            {
+
+            }
+        } catch(error) {}
+    } else {
+        console.error(`Функций checkValue получила в качестве значения selectElement: ${selectElement}`);
     }
 }
 
