@@ -4,6 +4,8 @@ let pickColumnElements = document.querySelectorAll(".pickColumn");
 let firstBothEls = new Set([pickColumnElements[0], pickColumnElements[1]]);
 let exceptions = new Set([]);
 
+console.log("yes");
+
 // Выбираются колонки для выбора на основе исключений
 function pickOptions(setOfSelects, arrayOfColumns, setOfExceptions) {
     const errors = [];
