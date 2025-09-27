@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="default.css">
+        <meta charset="UTF-8" />
+        <title>DashBoard</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Sansation:ital,wght@0,300;0,400;1,300;1,400&family=Special+Gothic+Expanded+One&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="newBlock" blockID=0>
+                <div class="mainBlockPanel">
+                    <div class="buttonsPanel flex">
+                        <button onclick="manager.deleteBlock(0)" class="flex deleteButton button" disabled>
+                            <h4 class="white hfontA">Удалить таблицу</h4>
+                            <div class="addingProccessButton basicButton deleteIcon"></div>
+                        </button>
+
+                        <div class="pickTableBlock">
+                            <span class="white hfontA pp">Выберите таблицу</span>
+                            <div class="customSelect flex pp hfontB">
+                                <select name="" id="pickTable">
+                                    <option value="-1">Выберите вариант</option>
+                                    <option value="hpi_master">Первый</option>
+                                    <option value="temperature_test">Второй вариант</option>
+                                    <option value="add_user_link_choose">Ввести ссылку</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="pickTableBlock flex" id="corelationSelectionBlock">
+                            <span class="white hfontA pp">Выберите два столбца, график которых будет отображён</span>
+                            <div class="customSelect flex pp hfontB">
+                                <select class="pickColumn" name="" id="pickColumn1" selectedValue="" ingore1="" ignore2="">
+                                    <option value="-1">Выберите вариант</option>
+                                </select>
+                            </div>
+
+                            <div class="customSelect flex pp hfontB">
+                                <select class="pickColumn" name="" id="pickColumn2" selectedValue="" ingore1="" ignore2="">
+                                    <option value="-1">Выберите вариант</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cavnasBlock darkBG">
+
+                    </div>
+
+                    <div class="lowerPanel flex">
+                        <button class="button addButton flex" onclick="manager.deleteBlock(0)">
+                            <h4 class="white hfontA">Добавить блок</h4>
+                            <div class="basicButton addIcon3"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="blocks.js"></script>
+        <script src="charts.js"></script>
+        <script src="visual.js"></script>
+    </body>
+</html>
