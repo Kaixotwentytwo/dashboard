@@ -1,9 +1,11 @@
 'use strict';
 
-let pickColumnElements = document.querySelectorAll("pickColumn");
-let firstBothEls = Set([pickColumnElements[0], pickColumnElements[1]]);
+let pickColumnElements = document.querySelectorAll(".pickColumn");
+let firstBothEls = new Set([pickColumnElements[0], pickColumnElements[1]]);
+let exceptions = new Set([]);
 
-function spawnOptions(setOfSelects, arrayOfColumns, setOfExceptions) {
+// Выбираются колонки для выбора на основе исключений
+function pickOptions(setOfSelects, arrayOfColumns, setOfExceptions) {
     const errors = [];
 
     try {
@@ -11,33 +13,95 @@ function spawnOptions(setOfSelects, arrayOfColumns, setOfExceptions) {
             errors.push("setOfSelects должен быть объектом Set");}
         if (!(arrayOfColumns instanceof Array)) {
             errors.push("arrayOfColumns должен быть объектом Array");}
-
-        // Даны исключения
-        if (setOfExceptions instanceof Set) {
-
-        }
-        // Исключений нет: работаем штатно
-        if (setOfExceptions === null || setOfExceptions === false || setOfExceptions === undefined) {
-
-        }
-
-        //Логика
-
+        if (setOfExceptions.size > 2) {
+            errors.push("Превышено количество доступных исключений");}
+        if (setOfSelects.size > 2) {
+            errors.push("Превышено количество доступных <select>");}
 
         // обработка ошибок
         if (errors.length>0) {
-            throw new TypeError(errors.join("; "));}
-    } catch (error) {
-        console.error("Ошибка валидации: "+error);
-    }
-}
+            throw new TypeError(errors);}
 
-function spawnPickers(setOfElements) {
-    if (setOfElements instanceof Set && (setOfElements.size == 1 || setOfElements == 2)) {
-        for (let i = 0; i < setOfElements.size; i++) {
+        // Даны исключения
+        if (setOfExceptions instanceof Set) {
+            setOfSelects.forEach(select=>{
 
+                while (select.children.length > 1) {
+                    select.removeChild(select.lastChild);}
+
+                let excludedList = [];
+                let optionsList = new Set(
+                    Array.from(arrayOfColumns).filter(item => !setOfExceptions.has(item)));
+
+                optionsList.forEach(function(item){
+                    let createOption = document.createElement("option");
+                    createOption.setAttribute("value", item);
+                    createOption.textContent = item;
+
+                    select.appendChild(createOption);
+                });
+            });
         }
+        // Исключений нет: работаем штатно
+        if (setOfExceptions.size == 0 || setOfExceptions === null || setOfExceptions === false || setOfExceptions === undefined) {
+            setOfSelects.forEach(select=>{
+
+                while (select.children.length > 1) {
+                    select.removeChild(select.lastChild);}
+
+                for (let j = 0; j < arrayOfColumns.length; j++) {
+                    let createOption = document.createElement("option");
+                    createOption.setAttribute("value", arrayOfColumns[j]);
+                    createOption.textContent = arrayOfColumns[j];
+
+                    select.appendChild(createOption);
+                }
+            });
+        }
+    } catch (error) {
+        errors.forEach(function(error){
+            console.error("Ошибка валидации: "+error);
+        });
     }
 }
 
-spawnPickers(firstBothEls, getFirstStrokeFromCSV(""), false);
+
+function checkValue(selectElement) {
+    if (selectElement != null || selectElement != false || selectElement != undefined) {
+        try {
+            if (selectElement.value != "-1")
+            {
+
+            }
+        } catch(error) {}
+    } else {
+        console.error(`Функций checkValue получила в качестве значения selectElement: ${selectElement}`);
+    }
+}
+
+
+
+function changeValues(SelectElement1, SelectElement2, selectedElements) {
+    let selectsSet = new Set([SelectElement1, SelectElement2]);
+    //pickOptions()
+}
+
+
+
+
+window.onload = function(){
+    try {
+        if (pickColumnElements.length % 2 != 0) {
+            for (let k = 0; k < pickColumnElements.length; k+=2) {
+                //pickColumnElements[k].addEventListener("change", "");
+                //pickColumnElements[k+1].addEventListener("change", "");
+            }
+        } else {
+            throw new TypeError(`Количество <select class="pickColumn"> : ${pickColumnElements.length}`);
+        }
+    } catch(error) {
+        console.error("Ошибка: "+error);
+    }
+};
+
+pickOptions(firstBothEls, getFirstStrokeFromCSV(""), exceptions);
