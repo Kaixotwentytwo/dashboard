@@ -8,7 +8,7 @@ let amountOfColumns = getFirstStrokeFromCSV("").length;
 let isExceptionHere = false;
 let exceptColumn;
 
-console.log("Yes")
+console.log("Yes");
 
 //function createSelectElements(amountOfColumns) {
 //	let count = amountOfColumns;
