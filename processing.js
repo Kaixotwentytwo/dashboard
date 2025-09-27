@@ -83,7 +83,6 @@ function checkValue(selectElement) {
 
 function changeValues(SelectElement1, SelectElement2, selectedElements) {
     let selectsSet = new Set([SelectElement1, SelectElement2]);
-
     //pickOptions()
 }
 
